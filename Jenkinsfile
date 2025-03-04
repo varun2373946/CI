@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         AWS_REGION = "ap-south-1"
-        SONAR_URL = http://65.0.4.157:9000
+        SONAR_URL = "http://65.0.4.157:9000" // Enclose URL in quotes to treat it as a string
         AWS_ACCOUNT_ID = "476114133216"
         REPO_NAME = "main"
         BUILD_NUMBER = "${env.BUILD_NUMBER}"
@@ -32,9 +32,9 @@ pipeline {
             steps {
                 script {
                     echo "Running Sonar analysis for 'main' branch"
-                    withSonarQubeEnv('Sonar') { // Using the correct Jenkins SonarQube credentials ID
-                       sh """
-                            $MAVEN_HOME/bin/mvn Sonar:Sonar -Dsonar.host.url=${SONAR_URL}
+                    withSonarQubeEnv('sonar') { // Using the correct Jenkins SonarQube credentials ID
+                        sh """
+                            $MAVEN_HOME/bin/mvn sonar:sonar -Dsonar.host.url=${SONAR_URL}
                         """
                     }
                 }
