@@ -1,0 +1,140 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  font-family: Arial, sans-serif;
+}
+
+.App-header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.Ganapathy-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* Main content styles */
+.App-main {
+  padding: 20px;
+}
+
+.Content-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.Content-about,
+.Content-pictures,
+.Content-location {
+  flex: 1;
+  max-width: 30%;
+}
+
+.Content-about {
+  order: 1; /* Adjust order as needed */
+}
+
+.Content-pictures {
+  order: 2;
+}
+
+.Content-location {
+  order: 3;
+}
+
+.Picture-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.Gallery-img {
+  width: 100%; /* Adjust size as needed */
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Footer styles */
+.App-footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  bottom: 0;
+  width: 100%;
+}
+
+.Footer-social {
+  margin-bottom: 10px;
+}
+
+.Social-icon {
+  width: 30px; /* Adjust size as needed */
+  height: 30px;
+  margin: 0 10px;
+}
+
+.Footer-contact {
+  font-size: 0.9em;
+}
+
+.Image-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  transition: opacity 1s ease-out, transform 1s ease-out; /* Smooth transition for fade-out and slide-up */
+}
+
+.Image-container.hidden {
+  opacity: 0; /* Image will become invisible */
+  transform: translateY(-20px); /* Slide up when scrolled out of view */
+}
+
+.Responsive-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the container without cropping */
+  border-radius: 8px;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .Content-about,
+  .Content-pictures,
+  .Content-location,
+  .Footer-top {
+    max-width: 100%;
+  }
+}

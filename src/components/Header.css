@@ -1,0 +1,47 @@
+.App-header {
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f7bf50;
+  color: #ff0066;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.Header-logo {
+  flex: 0;
+}
+
+.Ganesh-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.Header-nav {
+  display: flex;
+  gap: 15px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.Nav-link {
+  background-color: transparent;
+  color: black;
+  padding: 8px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: color 0.3s, border 0.3s;
+  border: 2px solid transparent;
+}
+
+.Nav-link:hover {
+  color: black;
+  border: 2px solid black;
+}

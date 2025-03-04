@@ -1,0 +1,45 @@
+.App-footer {
+  background-color: #f7bf50;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.Footer-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.Footer-social {
+  display: flex;
+  align-items: center;
+}
+
+.Social-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+
+.Footer-contact {
+  text-align: right;
+  font-size: 0.9em;
+}
+
+.Footer-contact p {
+  margin: 5px 0;
+}
+
+.Footer-copyright {
+  text-align: center;
+  width: 100%;
+  font-size: 0.8em;
+  margin-top: 10px;
+}
