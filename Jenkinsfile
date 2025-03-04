@@ -1,45 +1,60 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven'  // Ensure 'Maven' is configured in Jenkins Global Tool Configuration
+    }
     environment {
-        SONAR_URL = "http://65.0.4.157:9000"
         AWS_REGION = "ap-south-1"
+        SONAR_URL = http://65.0.4.157:9000
+        AWS_ACCOUNT_ID = "476114133216"
+        REPO_NAME = "main"
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        S3_BUCKET = "varuns3" 
     }
-
     stages {
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
+        stage("Checkout Code") {
             steps {
                 script {
-                    echo "Building the project"
-                    sh 'mvn clean package -Dmaven.test.skip=true'
+                    echo "Checking out code..."
+                    checkout scm
                 }
             }
         }
-
-        stage('Sonar Analysis') {
+        stage("Build and Package") {
             steps {
                 script {
-                    echo "Running SonarQube analysis"
-                    sh "mvn Sonar:Sonar -Dsonar.host.url=${SONAR_URL}"
+                    sh "$MAVEN_HOME/bin/mvn clean package -Dmaven.test.skip=true | tee mvn_build.log"
+                    archiveArtifacts artifacts: 'mvn_build.log', fingerprint: true
+                }
+            }
+        }
+        stage("Sonar Analysis") {
+            steps {
+                script {
+                    echo "Running Sonar analysis for 'main' branch"
+                    withSonarQubeEnv('Sonar') { // Using the correct Jenkins SonarQube credentials ID
+                       sh """
+                            $MAVEN_HOME/bin/mvn Sonar:Sonar -Dsonar.host.url=${SONAR_URL}
+                        """
+                    }
+                }
+            }
+        }
+        stage("Docker Build") {
+            steps {
+                script {
+                    echo "Building Docker image"
+                    sh "docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
     }
-
     post {
         success {
-            echo 'Build and analysis completed successfully!'
+            echo "Pipeline executed successfully!"
         }
-
         failure {
-            echo 'Build or analysis failed!'
+            echo "Pipeline execution failed!"
         }
     }
 }
-
