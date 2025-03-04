@@ -5,11 +5,12 @@ pipeline {
     }
     environment {
         AWS_REGION = "ap-south-1"
-        SONAR_URL = http://65.0.4.157:9000
+        SONAR_URL = 'http://65.0.4.157:9000'  // Enclose URL in quotes
         AWS_ACCOUNT_ID = "476114133216"
         REPO_NAME = "main"
         BUILD_NUMBER = "${env.BUILD_NUMBER}"
-        S3_BUCKET = "varuns3" 
+        S3_BUCKET = "varuns3"
+        IMAGE_NAME = "uat-image"  // Define IMAGE_NAME
     }
     stages {
         stage("Checkout Code") {
@@ -58,3 +59,4 @@ pipeline {
         }
     }
 }
+
