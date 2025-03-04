@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         AWS_REGION = "ap-south-1"
-        SONAR_URL = http://65.0.4.157/:9000
+        SONAR_URL = http://65.0.4.157:9000
         AWS_ACCOUNT_ID = "476114133216"
         REPO_NAME = "main"
         BUILD_NUMBER = "${env.BUILD_NUMBER}"
