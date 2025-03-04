@@ -43,7 +43,7 @@
             "script": "echo \"Running SonarQube analysis\""
           },
           {
-            "script": "mvn sonar:sonar -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
+            "script": "mvn Sonar:Sonar -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
           }
         ]
       },
