@@ -28,18 +28,7 @@ pipeline {
                 }
             }
         }
-        stage("Sonar Analysis") {
-            steps {
-                script {
-                    echo "Running Sonar analysis for 'main' branch"
-                    withSonarQubeEnv('sonar') { // Using the correct Jenkins SonarQube credentials ID
-                        sh """
-                            $MAVEN_HOME/bin/mvn sonar:sonar -Dsonar.host.url=${SONAR_URL}
-                        """
-                    }
-                }
-            }
-        }
+    
         stage("Docker Build") {
             steps {
                 script {
