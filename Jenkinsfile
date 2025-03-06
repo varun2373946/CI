@@ -12,64 +12,42 @@ pipeline {
     }
 
     stages {
-        stage("Checkout Code") {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/varun2373946/CI.git'
+            }
+        }
+
+        stage('Build Docker Image') {
             steps {
                 script {
-                    echo "Checking out code..."
-                    checkout scm  // This checks out the code from the Git repository
+                    sh 'docker build -t my-node-app .'
                 }
             }
         }
 
-        stage("Build Docker Image") {
+        stage('Authenticate to AWS ECR') {
             steps {
                 script {
-                    echo "Building Docker image..."
-                    // Build the Docker image
-                    sh "docker build -t ${IMAGE_NAME} ."
+                    sh 'aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com'
                 }
             }
         }
 
-        stage("Authenticate to ECR") {
+        stage('Tag Docker Image') {
             steps {
                 script {
-                    echo "Authenticating Docker to Amazon ECR..."
-                    // Authenticate Docker to ECR using AWS CLI
-                    sh """
-                    aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${DOCKER_REGISTRY_URL}
-                    """
+                    sh 'docker tag my-node-app:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG'
                 }
             }
         }
 
-        stage("Tag Docker Image") {
+        stage('Push Docker Image to ECR') {
             steps {
                 script {
-                    echo "Tagging Docker image..."
-                    // Tag the Docker image to the ECR repository
-                    sh "docker tag ${IMAGE_NAME}:latest ${DOCKER_REGISTRY_URL}/${ECR_REPO_NAME}:${DOCKER_TAG}"
+                    sh 'docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG'
                 }
             }
-        }
-
-        stage("Push Docker Image to ECR") {
-            steps {
-                script {
-                    echo "Pushing Docker image to ECR..."
-                    // Push the Docker image to ECR
-                    sh "docker push ${DOCKER_REGISTRY_URL}/${ECR_REPO_NAME}:${DOCKER_TAG}"
-                }
-            }
-        }
-    }
-
-    post {
-        success {
-            echo "Pipeline executed successfully!"
-        }
-        failure {
-            echo "Pipeline execution failed!"
         }
     }
 }
